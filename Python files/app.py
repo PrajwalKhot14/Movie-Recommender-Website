@@ -7,4 +7,4 @@ movies = pd.DataFrame(movies_dict)
 
 st.title('Movie Recommender System')
 
-select_movie_name = st.selectbox('Select a movie', ( movies['title'].values))
+selected_movie = st.selectbox('Select a movie', ( movies['title'].values))
