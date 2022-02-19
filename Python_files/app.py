@@ -20,6 +20,7 @@ def recommend(movie):
 
         recommended_movies.append(movies.iloc[i[0]].title)
         recommended_movies_poster.append(fetch_poster(movie_id))
+        
     return recommended_movies, recommended_movies_poster
 
 similarity  = pickle.load(open('similarity.pkl', 'rb'))
