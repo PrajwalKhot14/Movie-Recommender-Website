@@ -3,12 +3,16 @@ import pickle
 import pandas as pd
 import requests
 
+
 def fetch_poster(movie_id):
-    response = requests.get('https://api.themoviedb.org/3/movie/{}?api_key=27d7075c356c6056df4ffe06ce51a213&language=en-US'.format(movie_id))
+    response = requests.get(
+        'https://api.themoviedb.org/3/movie/{}?api_key=27d7075c356c6056df4ffe06ce51a213&language=en-US'.format(
+            movie_id))
     data = response.json()
     print(data)
     return "https://image.tmdb.org/t/p/w500/" + data['poster_path']
-    
+
+
 def recommend(movie):
     movie_index = movies[movies['title'] == movie].index[0]
     distances = similarity[movie_index]
@@ -20,16 +24,18 @@ def recommend(movie):
 
         recommended_movies.append(movies.iloc[i[0]].title)
         recommended_movies_poster.append(fetch_poster(movie_id))
-        
+
     return recommended_movies, recommended_movies_poster
 
-similarity  = pickle.load(open('similarity.pkl', 'rb'))
+
 movies_dict = pickle.load(open('movie_dict.pkl', 'rb'))
+similarity = pickle.load(open('similarity.pkl', 'rb'))
+
 movies = pd.DataFrame(movies_dict)
 
 st.title('Movie Recommender System')
 
-selected_movie = st.selectbox('Select a movie', ( movies['title'].values))
+selected_movie = st.selectbox('Select a movie', (movies['title'].values))
 
 if st.button('Recommend'):
     names, poster = recommend(selected_movie)
